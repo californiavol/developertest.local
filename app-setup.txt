@@ -313,3 +313,49 @@ Application
 robertsc$ ./zf.php version
 ZFTool - Zend Framework 2 command line Tool
 The application in this folder is using Zend Framework 2.3.3
+----------------------------------------------------------------------
+
+
+
+
+/**************************************************************************
+* ZF2 Person Module
+**************************************************************************/
+robertsc$ ./zf.php create module Person
+The module Person has been created
+
+robertsc$ ./zf.php create controller Index Person
+The controller Index has been created in module Person.
+
+
+robertsc$ cd module/Person/
+robertsc$ ls
+Module.php	config		src		view
+robertsc$ mkdir test
+robertsc$ cd test/
+robertsc$ mkdir PersonTest
+robertsc$ cd PersonTest/
+robertsc$ mkdir Controller
+robertsc$ cd Controller/
+robertsc$ touch IndexControllerTest.php
+robertsc$ cd ../../
+robertsc$ ls
+PersonTest
+robertsc$ touch Bootstrap.php
+robertsc$ touch phpunit.xml.dist
+robertsc$ touch TestConfig.php.dist
+
+** make sure to reference Person module 
+
+robertsc$ phpunit
+PHPUnit 4.2.6 by Sebastian Bergmann.
+
+Configuration read from /Applications/MAMP/htdocs/developertest.local/module/Person/test/phpunit.xml.dist
+
+.
+
+Time: 154 ms, Memory: 5.50Mb
+
+OK (1 test, 1 assertion)
+
+
