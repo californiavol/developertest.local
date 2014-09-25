@@ -1,0 +1,1 @@
+/Applications/MAMP/htdocs/developertest.local/vendor/zendframework/zftool/zf.php

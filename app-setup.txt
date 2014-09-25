@@ -1,0 +1,422 @@
+
+/**************************************************************************
+* 
+**************************************************************************/
+
+/**************************************************************************
+* PHP Version
+**************************************************************************/
+robertsc$ php -v
+PHP 5.4.30 (cli) (built: Jul 29 2014 23:43:29) 
+Copyright (c) 1997-2014 The PHP Group
+Zend Engine v2.4.0, Copyright (c) 1998-2014 Zend Technologies
+----------------------------------------------------------------------
+
+MAMP 2
+
+/**************************************************************************
+* Virtual Host Conf
+**************************************************************************/
+httpd-vhosts.conf
+
+<VirtualHost *:80>
+    ServerName developertest.local
+    DocumentRoot /Applications/MAMP/htdocs/developertest.local/public
+    SetEnv APPLICATION_ENV "development"
+    <Directory /Applications/MAMP/htdocs/developertest.local/public>
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+</VirtualHost>
+
+On production set APPLICATION_ENV "production"
+----------------------------------------------------------------------
+
+
+/**************************************************************************
+* Virtual Host
+**************************************************************************/
+robertsc$ sudo emacs /etc/hosts
+127.0.0.1   developertest.local
+----------------------------------------------------------------------
+
+
+/**************************************************************************
+* Git ZF2
+**************************************************************************/
+robertsc$ cd /Applications/MAMP/htdocs/
+robertsc$ git clone git://github.com/zendframework/ZendSkeletonApplication.git developertest.local
+
+robertsc$ cd developertest.local/
+robertsc$ php composer.phar self-update
+robertsc$ php composer.phar install
+----------------------------------------------------------------------
+
+/**************************************************************************
+* PHPUnit
+**************************************************************************/
+wget https://phar.phpunit.de/phpunit.phar
+robertsc$ chmod +x phpunit.phar 
+robertsc$ sudo mv phpunit.phar /usr/local/bin/phpunit
+
+robertsc$ phpunit --version
+PHPUnit 4.2.6 by Sebastian Bergmann.
+
+robertsc$ cd /Applications/MAMP/htdocs/developertest.local/module/Application/
+robertsc$ mkdir test
+robertsc$ cd test/
+robertsc$ mkdir ApplicationTest
+robertsc$ cd ApplicationTest/
+robertsc$ mkdir Controller
+
+robertsc$ cd ../
+robertsc$ pwd
+/Applications/MAMP/htdocs/developertest.local/module/Application/test
+robertsc$ emacs phpunit.xml.dist
+
+<phpunit bootstrap="Bootstrap.php">
+    <testsuites>
+	<testsuite name="zf2tutorial">
+            <directory>./ApplicationTest</directory>
+	</testsuite>
+    </testsuites>
+</phpunit>
+
+
+robertsc$ emacs Bootstrap.php
+<?php
+namespace ApplicationTest;//Change this namespace for your test
+
+use Zend\Loader\AutoloaderFactory;
+use Zend\Mvc\Service\ServiceManagerConfig;
+use Zend\ServiceManager\ServiceManager;
+use Zend\Stdlib\ArrayUtils;
+use RuntimeException;
+
+error_reporting(E_ALL | E_STRICT);
+chdir(__DIR__);
+
+class Bootstrap
+{
+    protected static $serviceManager;
+    protected static $config;
+    protected static $bootstrap;
+
+    public static function init()
+    {
+        // Load the user-defined test configuration file, if it exists; otherwise, load
+        if (is_readable(__DIR__ . '/TestConfig.php')) {
+            $testConfig = include __DIR__ . '/TestConfig.php';
+        } else {
+            $testConfig = include __DIR__ . '/TestConfig.php.dist';
+        }
+
+        $zf2ModulePaths = array();
+
+        if (isset($testConfig['module_listener_options']['module_paths'])) {
+            $modulePaths = $testConfig['module_listener_options']['module_paths'];
+            foreach ($modulePaths as $modulePath) {
+                if (($path = static::findParentPath($modulePath)) ) {
+                    $zf2ModulePaths[] = $path;
+                }
+            }
+        }
+
+        $zf2ModulePaths  = implode(PATH_SEPARATOR, $zf2ModulePaths) . PATH_SEPARATOR;
+        $zf2ModulePaths .= getenv('ZF2_MODULES_TEST_PATHS') ?: (defined('ZF2_MODULES_TEST_PATHS') ? ZF2_MODULES_TEST_PATHS : '');
+
+        static::initAutoloader();
+
+        // use ModuleManager to load this module and it's dependencies
+        $baseConfig = array(
+            'module_listener_options' => array(
+                'module_paths' => explode(PATH_SEPARATOR, $zf2ModulePaths),
+            ),
+        );
+
+        $config = ArrayUtils::merge($baseConfig, $testConfig);
+
+        $serviceManager = new ServiceManager(new ServiceManagerConfig());
+        $serviceManager->setService('ApplicationConfig', $config);
+        $serviceManager->get('ModuleManager')->loadModules();
+
+        static::$serviceManager = $serviceManager;
+        static::$config = $config;
+    }
+
+    public static function getServiceManager()
+    {
+        return static::$serviceManager;
+    }
+
+    public static function getConfig()
+    {
+        return static::$config;
+    }
+
+    protected static function initAutoloader()
+    {
+        $vendorPath = static::findParentPath('vendor');
+
+        if (is_readable($vendorPath . '/autoload.php')) {
+            $loader = include $vendorPath . '/autoload.php';
+        } else {
+            $zf2Path = getenv('ZF2_PATH') ?: (defined('ZF2_PATH') ? ZF2_PATH : (is_dir($vendorPath . '/ZF2/library') ? $vendorPath . '/ZF2/library' : false));
+
+            if (!$zf2Path) {
+                throw new RuntimeException('Unable to load ZF2. Run `php composer.phar install` or define a ZF2_PATH environment variable.');
+            }
+
+            include $zf2Path . '/Zend/Loader/AutoloaderFactory.php';
+
+        }
+
+        AutoloaderFactory::factory(array(
+            'Zend\Loader\StandardAutoloader' => array(
+                'autoregister_zf' => true,
+                'namespaces' => array(
+                    __NAMESPACE__ => __DIR__ . '/' . __NAMESPACE__,
+                ),
+            ),
+        ));
+    }
+
+    protected static function findParentPath($path)
+    {
+        $dir = __DIR__;
+        $previousDir = '.';
+        while (!is_dir($dir . '/' . $path)) {
+            $dir = dirname($dir);
+            if ($previousDir === $dir) return false;
+            $previousDir = $dir;
+        }
+        return $dir . '/' . $path;
+    }
+}
+
+Bootstrap::init();
+
+
+emacs TestConfig.php.dist
+<?php
+return array(
+    'modules' => array(
+        'Application',
+    ),
+    'module_listener_options' => array(
+        'config_glob_paths'    => array(
+            '../../../config/autoload/{,*.}{global,local}.php',
+        ),
+        'module_paths' => array(
+            'module',
+            'vendor',
+        ),
+    ),
+);
+
+
+robertsc$ cd ApplicationTest/Controller/
+robertsc$ emacs IndexControllerTest.php
+
+<?php
+
+namespace ApplicationTest\Controller;
+
+use ApplicationTest\Bootstrap;
+use Zend\Mvc\Router\Http\TreeRouteStack as HttpRouter;
+use Application\Controller\IndexController;
+use Zend\Http\Request;
+use Zend\Http\Response;
+use Zend\Mvc\MvcEvent;
+use Zend\Mvc\Router\RouteMatch;
+use PHPUnit_Framework_TestCase;
+
+class IndexControllerTest extends \PHPUnit_Framework_TestCase
+{
+    protected $controller;
+    protected $request;
+    protected $response;
+    protected $routeMatch;
+    protected $event;
+
+    protected function setUp()
+    {
+        $serviceManager = Bootstrap::getServiceManager();
+        $this->controller = new IndexController();
+        $this->request    = new Request();
+        $this->routeMatch = new RouteMatch(array('controller' => 'index'));
+        $this->event      = new MvcEvent();
+        $config = $serviceManager->get('Config');
+        $routerConfig = isset($config['router']) ? $config['router'] : array();
+        $router = HttpRouter::factory($routerConfig);
+
+        $this->event->setRouter($router);
+        $this->event->setRouteMatch($this->routeMatch);
+        $this->controller->setEvent($this->event);
+        $this->controller->setServiceLocator($serviceManager);
+    }
+
+
+    public function testIndexActionCanBeAccessed()
+    {
+        $this->routeMatch->setParam('action', 'index');
+
+        $result   = $this->controller->dispatch($this->request);
+        $response = $this->controller->getResponse();
+
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
+
+
+}
+
+
+
+
+
+robertsc$ cd ../../
+robertsc$ pwd
+/Applications/MAMP/htdocs/developertest.local/module/Application/test
+robertsc$ phpunit
+PHPUnit 4.2.6 by Sebastian Bergmann.
+
+Configuration read from /Applications/MAMP/htdocs/developertest.local/module/Application/test/phpunit.xml.dist
+
+.
+
+Time: 528 ms, Memory: 5.50Mb
+
+OK (1 test, 1 assertion)
+
+----------------------------------------------------------------------
+
+
+
+
+
+/**************************************************************************
+* ZF2 Tool
+**************************************************************************/
+
+robertsc$ cd /Applications/MAMP/htdocs/developertest.local/
+robertsc$ sudo composer require zendframework/zftool:dev-master
+
+robertsc$ ln -s /Applications/MAMP/htdocs/developertest.local/vendor/zendframework/zftool/zf.php .
+
+robertsc$ ./zf.php modules
+Modules installed:
+Application
+
+robertsc$ ./zf.php version
+ZFTool - Zend Framework 2 command line Tool
+The application in this folder is using Zend Framework 2.3.3
+----------------------------------------------------------------------
+
+
+
+
+/**************************************************************************
+* ZF2 Person Module
+**************************************************************************/
+robertsc$ ./zf.php create module Person
+The module Person has been created
+
+robertsc$ ./zf.php create controller Index Person
+The controller Index has been created in module Person.
+
+
+robertsc$ cd module/Person/
+robertsc$ ls
+Module.php	config		src		view
+robertsc$ mkdir test
+robertsc$ cd test/
+robertsc$ mkdir PersonTest
+robertsc$ cd PersonTest/
+robertsc$ mkdir Controller
+robertsc$ cd Controller/
+robertsc$ touch IndexControllerTest.php
+robertsc$ cd ../../
+robertsc$ ls
+PersonTest
+robertsc$ touch Bootstrap.php
+robertsc$ touch phpunit.xml.dist
+robertsc$ touch TestConfig.php.dist
+
+** make sure to reference Person module 
+
+robertsc$ phpunit
+PHPUnit 4.2.6 by Sebastian Bergmann.
+
+Configuration read from /Applications/MAMP/htdocs/developertest.local/module/Person/test/phpunit.xml.dist
+
+.
+
+Time: 154 ms, Memory: 5.50Mb
+
+OK (1 test, 1 assertion)
+
+
+Set up Person Module Configuration
+/module/Person/config/module.config.php
+
+<?php
+return array(
+    'controllers' => array(
+        'invokables' => array(
+            'Person\Controller\Index' => 'Person\Controller\IndexController',
+        ),
+    ),
+    'router' => array(
+        'routes' => array(
+            'home' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/',
+                    'defaults' => array(
+                        'controller' => 'Person\Controller\Index',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            // The following is a route to simplify getting started creating
+            // new controllers and actions without needing to create a new
+            // module. Simply drop new controllers in, and you can access them
+            // using the path /application/:controller/:action
+            'application' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/person',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Person\Controller',
+                        'controller'    => 'Index',
+                        'action'        => 'index',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:controller[/:action]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+    ),
+    'view_manager' => array(
+        'template_path_stack' => array(
+            'person' => __DIR__ . '/../view',
+        ),
+    ),
+);
+
