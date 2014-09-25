@@ -18,11 +18,15 @@ msgstr ""
 
 #: ../view/layout/layout.phtml:6
 #: ../view/layout/layout.phtml:33
-msgid "Skeleton Application"
+msgid "Developer Test"
 msgstr ""
 
-#: ../view/layout/layout.phtml:36
+#: ../view/layout/layout.phtml:41
 msgid "Home"
+msgstr ""
+
+#: ../view/layout/layout.phtml:42
+msgid "People"
 msgstr ""
 
 #: ../view/layout/layout.phtml:50
@@ -31,7 +35,7 @@ msgstr ""
 
 #: ../view/application/index/index.phtml:2
 #, php-format
-msgid "Welcome to %sZend Framework 2%s"
+msgid "Developer Test for Insight Global"
 msgstr ""
 
 #: ../view/application/index/index.phtml:3
@@ -44,7 +48,7 @@ msgid "Fork Zend Framework 2 on GitHub"
 msgstr ""
 
 #: ../view/application/index/index.phtml:10
-msgid "Follow Development"
+msgid "PHP Framework"
 msgstr ""
 
 #: ../view/application/index/index.phtml:11
@@ -57,7 +61,7 @@ msgid "ZF2 Development Portal"
 msgstr ""
 
 #: ../view/application/index/index.phtml:16
-msgid "Discover Modules"
+msgid "Modular Application"
 msgstr ""
 
 #: ../view/application/index/index.phtml:17
@@ -70,7 +74,7 @@ msgid "Explore ZF2 Modules"
 msgstr ""
 
 #: ../view/application/index/index.phtml:22
-msgid "Help &amp; Support"
+msgid "Unit Testing"
 msgstr ""
 
 #: ../view/application/index/index.phtml:23
