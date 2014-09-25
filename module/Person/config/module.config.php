@@ -7,10 +7,10 @@ return array(
     ),
     'router' => array(
         'routes' => array(
-            'home' => array(
+            'person' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/',
+                    'route'    => '/person',
                     'defaults' => array(
                         'controller' => 'Person\Controller\Index',
                         'action'     => 'index',
@@ -20,8 +20,8 @@ return array(
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
-            // using the path /application/:controller/:action
-            'application' => array(
+            // using the path /person/:controller/:action
+            'person' => array(
                 'type'    => 'Literal',
                 'options' => array(
                     'route'    => '/person',
