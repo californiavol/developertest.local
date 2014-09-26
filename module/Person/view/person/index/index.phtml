@@ -11,16 +11,13 @@
                   </tr>
                 </thead>
                 <tbody>
+                    <?php foreach ($people as $person) : ?>
                     <tr>
-                        <td>Rob</td>
-                        <td>Doe</td>
-                        <td>25</td>
+                        <td><?php echo $this->escapeHtml($person->FName); ?></td>
+                        <td><?php echo $this->escapeHtml($person->LName); ?></td>
+                        <td><?php echo $this->escapeHtml($person->Age); ?></td>
                     </tr>
-                    <tr>
-                        <td>Jane</td>
-                        <td>Smith</td>
-                        <td>35</td>
-                    </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

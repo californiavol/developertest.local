@@ -10,9 +10,16 @@
 
 class Person {
     
-    private $FName;
-    private $LName;
-    private $Age;
+    public $fname;
+    public $lname;
+    public $age;
+    
+    public function exchangeArray($data)
+    {
+        $this->fname = (isset($data['fname'])) ? $data['fname'] : null;
+        $this->lname = (isset($data['lname'])) ? $data['lname'] : null;
+        $this->age   = (isset($data['age']))   ? $data['age']   : null;
+    }  
     
     public function getFName()
     {

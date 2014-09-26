@@ -1,6 +1,9 @@
 <?php
 namespace Person;
 
+use Person\Model\Person;
+use Person\Model\PersonJson;
+
 class Module
 {
     public function getConfig()
@@ -18,4 +21,21 @@ class Module
             ),
         );
     }
+    
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'Person\Model\Person' => function($sm) {
+                    $person = new Person();
+                    return $person;
+                },
+                'Person\Model\PersonJson' => function($sm) {
+                    $personJson = new PersonJson();
+                    return $personJson;
+                }        
+            )
+        );
+    }
+    
 }
