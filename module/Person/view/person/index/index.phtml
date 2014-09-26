@@ -13,9 +13,9 @@
                 <tbody>
                     <?php foreach ($people as $person) : ?>
                     <tr>
-                        <td><?php echo $this->escapeHtml($person->FName); ?></td>
-                        <td><?php echo $this->escapeHtml($person->LName); ?></td>
-                        <td><?php echo $this->escapeHtml($person->Age); ?></td>
+                        <td><?php echo $this->escapeHtml($person['FName']); ?></td>
+                        <td><?php echo $this->escapeHtml($person['LName']); ?></td>
+                        <td><?php echo $this->escapeHtml($person['Age']); ?></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
