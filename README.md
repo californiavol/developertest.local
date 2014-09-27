@@ -24,13 +24,24 @@ line of code. </p>
 
 <h4>Solution</h4>
 <p>
-This is a basic application that uses the Zend Framework 2 MVC layer and module
+This is a basic application that uses Zend Framework 2 MVC layer and module
 system to retrieve and parse a JSON file and display the data in table format.
- It uses Twitter Bootstrap 3.2 for the layout and DataTables jQuery 
+ It uses Twitter Bootstrap 3.2 for the layout, look and feel and DataTables jQuery 
 plugin to sort and filter the table data.</p>
 
-Installation
-------------
+<h4>Installation</h4>
+
+
+Libraries
+----------
+<ul>
+<li>Zend Framework 2</li>
+<li>Twitter Bootstrap 3.2</li>
+<li>JQuery 1.11</li>
+<li>DataTables jQuery plugin</li>
+<li>PHPUnit 4.2</li>
+</ul>
+
 
 
 PHP Version
@@ -43,15 +54,18 @@ Zend Engine v2.4.0, Copyright (c) 1998-2014 Zend Technologies`
 </pre>
 
 
-Libraries
-----------
-<ul>
-<li>Zend Framework 2</li>
-<li>Twitter Bootstrap 3.2</li>
-<li>JQuery 1.11</li>
-<li>DataTables jQuery plugin</li>
-<li>PHPUnit 4.2</li>
-</ul>
+Git
+---
+<pre>
+robertsc$ cd /Applications/MAMP/htdocs/
+robertsc$ git clone git://github.com/californiavol/developertest.local developertest.local
+
+robertsc$ cd developertest.local/
+robertsc$ php composer.phar self-update
+robertsc$ php composer.phar install
+</pre>
+
+
 
 Virtual Host Config
 -------------------
@@ -82,17 +96,6 @@ robertsc$ sudo emacs /etc/hosts
 127.0.0.1   developertest.local
 </pre>
 
-
-Git
----
-<pre>
-robertsc$ cd /Applications/MAMP/htdocs/
-robertsc$ git clone git://github.com/californiavol/developertest.local developertest.local
-
-robertsc$ cd developertest.local/
-robertsc$ php composer.phar self-update
-robertsc$ php composer.phar install
-</pre>
 
 PHPUnit
 --------
