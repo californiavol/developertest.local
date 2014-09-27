@@ -13,8 +13,8 @@
                 <tbody>
                     <?php foreach ($people as $person) : ?>
                     <tr>
-                        <td><?php echo $this->escapeHtml($person['FName']); ?></td>
-                        <td><?php echo $this->escapeHtml($person['LName']); ?></td>
+                        <td><?php echo $this->escapeHtml(ucfirst($person['FName'])); ?></td>
+                        <td><?php echo $this->escapeHtml(ucfirst($person['LName'])); ?></td>
                         <td><?php echo $this->escapeHtml($person['Age']); ?></td>
                     </tr>
                     <?php endforeach; ?>
@@ -31,7 +31,8 @@
 <script>
     $(document).ready(function() {
         $('#dataTable').dataTable({
-            "iDisplayLength": 10
+            "iDisplayLength": 10,
+            "order": [1, 'desc'],
         });
     });
     </script>
