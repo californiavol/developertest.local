@@ -12,11 +12,12 @@ Installation
 
 PHP Version
 ------------
-`robertsc$ php -v
+<pre>
+robertsc$ php -v
 PHP 5.4.30 (cli) (built: Jul 29 2014 23:43:29) 
 Copyright (c) 1997-2014 The PHP Group
 Zend Engine v2.4.0, Copyright (c) 1998-2014 Zend Technologies`
-
+</pre>
 
 Virtual Host Conf
 -----------------
@@ -42,25 +43,30 @@ On production set APPLICATION_ENV "production"
 
 Virtual Host
 ------------
+<pre>
 robertsc$ sudo emacs /etc/hosts
 127.0.0.1   developertest.local
-
+</pre>
 
 
 Git ZF2
 -------
+<pre>
 robertsc$ cd /Applications/MAMP/htdocs/
 robertsc$ git clone git://github.com/zendframework/ZendSkeletonApplication.git developertest.local
 
 robertsc$ cd developertest.local/
 robertsc$ php composer.phar self-update
 robertsc$ php composer.phar install
+</pre>
 
 PHPUnit
 --------
+<pre>
 wget https://phar.phpunit.de/phpunit.phar
 robertsc$ chmod +x phpunit.phar 
 robertsc$ sudo mv phpunit.phar /usr/local/bin/phpunit
 
 robertsc$ phpunit --version
 PHPUnit 4.2.6 by Sebastian Bergmann.
+</pre>
