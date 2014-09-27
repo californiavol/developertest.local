@@ -8,6 +8,8 @@
 
 namespace Person\Model;
 
+use Person\Model\Person;
+
 class PersonJson {
     
     protected $json;
@@ -27,6 +29,31 @@ class PersonJson {
         $people = $this->decodeJson();
         //var_dump($people);  
         
+        foreach ($people as $person) {
+            //$personModel = $this->getPersonModel();
+            //var_dump($person);
+            $personModel = new Person();
+            $personModel->setFirstName($person['FName']);
+            $personModel->setLastName($person['LName']);
+            $personModel->setAge($person['Age']);
+            
+            $peopleArray[] = array(
+              'FName' => $personModel->getFirstName(),
+              'LName' => $personModel->getLastName(),  
+              'Age'   => $personModel->getAge()
+            );
+            
+            
+        }
+        
+        $peopleSorted = $this->sortPeople($peopleArray);
+        //var_dump($peopleSorted);
+        return $peopleSorted;
+    }
+    
+    public function sortPeople($people)
+    {
+        
         $sortArray = array(); 
 
         foreach($people as $person){ 
@@ -42,6 +69,8 @@ class PersonJson {
 
         array_multisort($sortArray[$orderby],SORT_DESC,$people); 
         //var_dump($people); 
+        
+        
         return $people;
     }
 
