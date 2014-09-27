@@ -10,47 +10,45 @@
 
 class Person {
     
-    public $fname;
-    public $lname;
+    public $firstName;
+    public $lastName;
     public $age;
     
-    public function exchangeArray($data)
+    public function getFirstName()
     {
-        $this->fname = (isset($data['fname'])) ? $data['fname'] : null;
-        $this->lname = (isset($data['lname'])) ? $data['lname'] : null;
-        $this->age   = (isset($data['age']))   ? $data['age']   : null;
-    }  
-    
-    public function getFName()
-    {
-        return $this->FName;
+        return $this->firstName;
     }
     
-    public function setFName(\Zend\XmlRpc\Value\String $FName)
+    public function setFirstName($firstName)
     {
-        $this->FName = $FName;
+        $this->firstName = $firstName;
     }
 
-    public function getLName()
+    public function getLastName()
     {
-        return $this->LName;
+        return $this->lastName;
     }
     
-    public function setLName(\Zend\XmlRpc\Value\String $LName)
+    public function setLastName($lastName)
     {
-        $this->LName = $LName;
+        $this->lastName = $lastName;
     }
     
     public function getAge()
     {
-        return $this->Age;
+        return $this->age;
     }
     
-    public function setAge(Int $Age)
+    public function setAge($age)
     {
-        $this->Age = $Age;
+        $this->age = $age;
     }
     
-
+    public function exchangeArray(array $data)
+    {
+        $this->firstName = (isset($data['fname'])) ? $data['fname'] : null;
+        $this->lastName  = (isset($data['lname'])) ? $data['lname'] : null;
+        $this->age       = (isset($data['age']))   ? $data['age']   : null;
+    }  
 
 }

@@ -5,13 +5,19 @@ namespace Person\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
+
 class IndexController extends AbstractActionController
 {
 
     public function indexAction()
     {   
+        $people = array();
+        $people = $this->getPersonJson()->getAllPeople();
+        $people = sort($people);
+        //var_dump($people);
+        
         return new ViewModel(array(
-            'people' => $this->getPersonJson()->fetchAll(),
+            'people' => $people,
         ));
     }
     
