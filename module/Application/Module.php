@@ -19,8 +19,21 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+        
+        //handle the dispatch error (exception) 
+        $eventManager->attach(\Zend\Mvc\MvcEvent::EVENT_DISPATCH_ERROR, array($this, 'handleError'));
+        //handle the view render error (exception) 
+        $eventManager->attach(\Zend\Mvc\MvcEvent::EVENT_RENDER_ERROR, array($this, 'handleError'));
     }
 
+    public function handleError(MvcEvent $e)
+    {
+        //get the exception
+        $exception = $e->getParam('exception');
+        //...handle the exception... maybe log it and redirect to another page, 
+        //or send an email that an exception occurred...
+    }
+    
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';

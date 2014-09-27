@@ -69,17 +69,17 @@ robertsc$ php composer.phar install
 httpd-vhosts.conf
 </p>
 <pre><code>
-`<VirtualHost *:80>`
+<VirtualHost *:80>
     ServerName developertest.local
     DocumentRoot /Applications/MAMP/htdocs/developertest.local/public
     SetEnv APPLICATION_ENV "development"
-    `<Directory /Applications/MAMP/htdocs/developertest.local/public>`
+    <Directory /Applications/MAMP/htdocs/developertest.local/public>
         DirectoryIndex index.php
         AllowOverride All
         Order allow,deny
         Allow from all
-    `</Directory>`
-`</VirtualHost>`
+    </Directory>
+</VirtualHost>
 </code>
 </pre>
 <p>
