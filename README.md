@@ -68,7 +68,7 @@ robertsc$ php composer.phar install
 <p>
 httpd-vhosts.conf
 </p>
-<pre>
+<pre><code>
 <VirtualHost *:80>
     ServerName developertest.local
     DocumentRoot /Applications/MAMP/htdocs/developertest.local/public
@@ -80,6 +80,7 @@ httpd-vhosts.conf
         Allow from all
     </Directory>
 </VirtualHost>
+</code>
 </pre>
 <p>
 On production set APPLICATION_ENV "production"
