@@ -4,7 +4,7 @@ Developer Test
 Introduction
 ------------
 
-<h3>Requirements:</h3>
+<h4>Requirements:</h4>
 
 <p>You need to write a PHP program that will generate an HTML file that contains a sorted table of data 
 
@@ -24,8 +24,10 @@ line of code. </p>
 
 <h4>Solution</h4>
 <p>
-This is a basic application using the Zend Framework 2 MVC layer and module
-system.</p>
+This is a basic application that uses the Zend Framework 2 MVC layer and module
+system to retrieve and parse a JSON file and display the data in table format.
+ It uses Twitter Bootstrap 3.2 for the layout and DataTables jQuery 
+plugin to sort and filter the table data.</p>
 
 Installation
 ------------
@@ -43,11 +45,13 @@ Zend Engine v2.4.0, Copyright (c) 1998-2014 Zend Technologies`
 
 Libraries
 ----------
-Zend Framework 2
-Twitter Bootstrap 3.2
-JQuery 1.11
-DataTables jQuery plugin
-PHPUnit 4.2
+<ul>
+<li>Zend Framework 2</li>
+<li>Twitter Bootstrap 3.2</li>
+<li>JQuery 1.11</li>
+<li>DataTables jQuery plugin</li>
+<li>PHPUnit 4.2</li>
+</ul>
 
 Virtual Host Config
 -------------------
