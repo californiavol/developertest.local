@@ -12,12 +12,10 @@ Installation
 
 PHP Version
 ------------
-<pre>
-robertsc$ php -v
+`robertsc$ php -v
 PHP 5.4.30 (cli) (built: Jul 29 2014 23:43:29) 
 Copyright (c) 1997-2014 The PHP Group
-Zend Engine v2.4.0, Copyright (c) 1998-2014 Zend Technologies
-</pre>
+Zend Engine v2.4.0, Copyright (c) 1998-2014 Zend Technologies`
 
 
 Virtual Host Conf
