@@ -29,8 +29,7 @@ system to retrieve and parse a JSON file and display the data in table format.
  It uses Twitter Bootstrap 3.2 for the layout, look and feel and DataTables jQuery 
 plugin to sort and filter the table data.</p>
 
-Installation
-----------
+<h3>Installation</h3>
 
 <h4>Libraries</h4>
 
