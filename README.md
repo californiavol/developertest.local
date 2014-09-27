@@ -1,77 +1,64 @@
-ZendSkeletonApplication
+Developer Test
 =======================
 
 Introduction
 ------------
-This is a simple, skeleton application using the ZF2 MVC layer and module
-systems. This application is meant to be used as a starting place for those
-looking to get their feet wet with ZF2.
+This is a basic application using the Zend Framework 2 MVC layer and module
+system. 
 
 Installation
 ------------
 
-Using Composer (recommended)
-----------------------------
-The recommended way to get a working copy of this project is to clone the repository
-and use `composer` to install dependencies using the `create-project` command:
 
-    curl -s https://getcomposer.org/installer | php --
-    php composer.phar create-project -sdev --repository-url="https://packages.zendframework.com" zendframework/skeleton-application path/to/install
+PHP Version
+------------
+robertsc$ php -v
+PHP 5.4.30 (cli) (built: Jul 29 2014 23:43:29) 
+Copyright (c) 1997-2014 The PHP Group
+Zend Engine v2.4.0, Copyright (c) 1998-2014 Zend Technologies
 
-Alternately, clone the repository and manually invoke `composer` using the shipped
-`composer.phar`:
 
-    cd my/project/dir
-    git clone git://github.com/zendframework/ZendSkeletonApplication.git
-    cd ZendSkeletonApplication
-    php composer.phar self-update
-    php composer.phar install
+Virtual Host Conf
+-----------------
+httpd-vhosts.conf
 
-(The `self-update` directive is to ensure you have an up-to-date `composer.phar`
-available.)
+<VirtualHost *:80>
+    ServerName developertest.local
+    DocumentRoot /Applications/MAMP/htdocs/developertest.local/public
+    SetEnv APPLICATION_ENV "development"
+    <Directory /Applications/MAMP/htdocs/developertest.local/public>
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+</VirtualHost>
 
-Another alternative for downloading the project is to grab it via `curl`, and
-then pass it to `tar`:
+On production set APPLICATION_ENV "production"
 
-    cd my/project/dir
-    curl -#L https://github.com/zendframework/ZendSkeletonApplication/tarball/master | tar xz --strip-components=1
 
-You would then invoke `composer` to install dependencies per the previous
-example.
 
-Using Git submodules
---------------------
-Alternatively, you can install using native git submodules:
+Virtual Host
+------------
+robertsc$ sudo emacs /etc/hosts
+127.0.0.1   developertest.local
 
-    git clone git://github.com/zendframework/ZendSkeletonApplication.git --recursive
 
-Web Server Setup
-----------------
 
-### PHP CLI Server
+Git ZF2
+-------
+robertsc$ cd /Applications/MAMP/htdocs/
+robertsc$ git clone git://github.com/zendframework/ZendSkeletonApplication.git developertest.local
 
-The simplest way to get started if you are using PHP 5.4 or above is to start the internal PHP cli-server in the root directory:
+robertsc$ cd developertest.local/
+robertsc$ php composer.phar self-update
+robertsc$ php composer.phar install
 
-    php -S 0.0.0.0:8080 -t public/ public/index.php
+PHPUnit
+--------
+wget https://phar.phpunit.de/phpunit.phar
+robertsc$ chmod +x phpunit.phar 
+robertsc$ sudo mv phpunit.phar /usr/local/bin/phpunit
 
-This will start the cli-server on port 8080, and bind it to all network
-interfaces.
-
-**Note: ** The built-in CLI server is *for development only*.
-
-### Apache Setup
-
-To setup apache, setup a virtual host to point to the public/ directory of the
-project and you should be ready to go! It should look something like below:
-
-    <VirtualHost *:80>
-        ServerName zf2-tutorial.localhost
-        DocumentRoot /path/to/zf2-tutorial/public
-        SetEnv APPLICATION_ENV "development"
-        <Directory /path/to/zf2-tutorial/public>
-            DirectoryIndex index.php
-            AllowOverride All
-            Order allow,deny
-            Allow from all
-        </Directory>
-    </VirtualHost>
+robertsc$ phpunit --version
+PHPUnit 4.2.6 by Sebastian Bergmann.
