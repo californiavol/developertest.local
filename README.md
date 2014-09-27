@@ -29,11 +29,11 @@ system to retrieve and parse a JSON file and display the data in table format.
  It uses Twitter Bootstrap 3.2 for the layout, look and feel and DataTables jQuery 
 plugin to sort and filter the table data.</p>
 
-<h4>Installation</h4>
-
-
-Libraries
+Installation
 ----------
+
+<h4>Libraries</h4>
+
 <ul>
 <li>Zend Framework 2</li>
 <li>Twitter Bootstrap 3.2</li>
@@ -44,8 +44,7 @@ Libraries
 
 
 
-PHP Version
-------------
+<h4>PHP Version</h4>
 <pre>
 robertsc$ php -v
 PHP 5.4.30 (cli) (built: Jul 29 2014 23:43:29) 
@@ -54,8 +53,7 @@ Zend Engine v2.4.0, Copyright (c) 1998-2014 Zend Technologies`
 </pre>
 
 
-Git
----
+<h4>Git</h4>
 <pre>
 robertsc$ cd /Applications/MAMP/htdocs/
 robertsc$ git clone git://github.com/californiavol/developertest.local developertest.local
@@ -67,10 +65,10 @@ robertsc$ php composer.phar install
 
 
 
-Virtual Host Config
--------------------
+<h4>Virtual Host Config</h4>
+<p>
 httpd-vhosts.conf
-
+</p>
 <pre>
 <VirtualHost *:80>
     ServerName developertest.local
@@ -84,21 +82,19 @@ httpd-vhosts.conf
     </Directory>
 </VirtualHost>
 </pre>
-
+<p>
 On production set APPLICATION_ENV "production"
+</p>
 
 
-
-Virtual Host
-------------
+<h4>Virtual Host</h4>
 <pre>
 robertsc$ sudo emacs /etc/hosts
 127.0.0.1   developertest.local
 </pre>
 
 
-PHPUnit
---------
+<h4>PHPUnit</h4>
 <pre>
 wget https://phar.phpunit.de/phpunit.phar
 robertsc$ chmod +x phpunit.phar 
