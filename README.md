@@ -22,6 +22,7 @@ Virtual Host Conf
 -----------------
 httpd-vhosts.conf
 
+<pre><code>
 <VirtualHost *:80>
     ServerName developertest.local
     DocumentRoot /Applications/MAMP/htdocs/developertest.local/public
@@ -33,6 +34,7 @@ httpd-vhosts.conf
         Allow from all
     </Directory>
 </VirtualHost>
+</code></pre>
 
 On production set APPLICATION_ENV "production"
 
